@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name ="viewport" content ="width = device -width , initial - scale = 0.1">
+        <meta charset="utf-8">
+        <title> button </title>
+        <style>
+            
+            body{
+                background-color: rgb(219, 188, 207)
+            }
+           
+        </style>
+    </head>
+        <body>
+            <div class="label1">
+                <label><i></i> </label>      
+                0<input type="range" class="range" id="Slider" min="0" max="255" step="1" />255 , value=
+                <label for="value1" class="vlabel">&nbsp;  <label type="number" id="sliderVal" value=""> </label>
+                <label>
+            </div>
+           
+                
+            
+                <script>
+                    //var HOST = "ws://localhost: 3000";
+                    var HOST = location.origin.replace(/^http/,'ws'); 
+        var ws = new WebSocket(HOST);
+        var Slider = document.getElementById("Slider");
+            var readSlider = document.getElementById("Slider");
+            var sliderVal = document.getElementById("sliderVal"); 
+        ws.onopen= function(){
+           // console.log("Connected to server");            
+        }
+        Slider.onchange=function(){
+            ws.send(this.value.toString());
+            var sliderVal= Slider.value ;
+        }
+        ws.onmessage=function(event){
+            console.log(event.data);
+            sliderVal.innerHTML=event.data;
+            Slider.value=event.data;
+        }
+                   
+                </script> 
+        </body>
+</html>
